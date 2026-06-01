@@ -12,3 +12,5 @@ llama31-1b-movielens-full-final/
 
 # Large generated prompt dumps (regenerate locally; exceeds GitHub file limit)
 train_prompts.json
+
+md_files/

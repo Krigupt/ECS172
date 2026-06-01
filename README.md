@@ -42,26 +42,29 @@ python scripts/train_sasrec.py --epochs 15
 
 ---
 
-## Phase 2: Adapter (reconstruction)
+## Phase 2: Adapter (LLaMA-grounded alignment)
 
-Maps SASRec vectors into Llama hidden size while preserving collaborative structure:
+Maps SASRec vectors into Llama hidden space by teacher-forcing movie title
+reconstruction through frozen LLaMA:
 
 ```
-e (50) --[W,b]--> z (2048) --[D]--> ê (50),  L_rec = MSE(e, ê)
+e (50) --[MLP]--> z (2048)  ← prepended as soft prefix token to LLaMA
+[z | embed("Toy Story (Animation)")]  → frozen LLaMA forward
+Loss: CrossEntropy over title tokens   (gradient → adapter only)
 ```
 
 Train (after Phase 1 checkpoints exist):
 
 ```bash
 python scripts/train_adapter.py --smoke
-python scripts/train_adapter.py --epochs 100
+python scripts/train_adapter.py --epochs 10
 ```
 
 | Output | Description |
 |--------|-------------|
-| `checkpoints/adapter.pt` | Projector + decoder weights |
+| `checkpoints/adapter.pt` | Projector weights (Linear→SiLU→LayerNorm→Linear) |
 
-Defaults: `sasrec_dim=50`, `llm_dim=2048` (Llama-3.2-1B). Uses best val MSE checkpoint.
+Defaults: `sasrec_dim=50`, `hidden_dim=1024`, `llm_dim=2048` (Llama-3.2-1B). Uses best val CE checkpoint.
 
 ---
 
@@ -92,3 +95,32 @@ python scripts/predict_ranking.py --user-id 5 --no-injection
 | `predict_ranking.py` | Single-user inference (`--user-id` or custom movie IDs) |
 
 Use `--no-injection` for text-only baseline. `--n-history 10` matches CSV (change when you add more history columns).
+
+
+## Quick Reference: Training Commands
+
+Here are the commands to run the updated training pipeline:
+
+**1. Train SASRec to generate the base item embeddings**
+```bash
+python scripts/train_sasrec.py --epochs 15
+```
+
+**2. Train the Adapter (Grounded to Base LLaMA)**
+```bash
+python scripts/train_adapter.py --epochs 10 --llm-model unsloth/Llama-3.2-1B-Instruct
+```
+
+**3. Train the Adapter (Grounded to Fine-Tuned LLaMA)**
+```bash
+python scripts/train_adapter.py --epochs 10 --llm-model ./llama31-1b-movielens-full-final
+```
+
+**4. Run Evaluation (Inference)**
+```bash
+# Compare against Text-Only Baseline
+python scripts/eval_ranking.py --no-injection --model ./llama31-1b-movielens-full-final
+
+# Run with the newly grounded adapter injection
+python scripts/eval_ranking.py --use-adapter-llm --model ./llama31-1b-movielens-full-final
+```
