@@ -110,6 +110,7 @@ class InjectedLlamaRanker(nn.Module):
                     AdapterConfig(
                         sasrec_dim=cfg.get("sasrec_dim", item_emb.shape[1]),
                         llm_dim=cfg["llm_dim"],
+                        hidden_dim=cfg.get("hidden_dim", 1024),
                     )
                 )
             state = adapter_ckpt.get("model_state_dict") or adapter_ckpt.get("adapter_state_dict")
