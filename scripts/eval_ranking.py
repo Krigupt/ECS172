@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
-"""Phase 3: Evaluate ranker on test_ranking (HR@10, NDCG@10).
+"""Phase 3: Letter-based (A-J) log-prob ranking eval — Mode A vs Mode C.
 
-Uses your fine-tuned local Llama (LoRA) for generation; optional SASRec vector injection.
+Two conditions only (B/D dropped per project scope):
+    Mode A — text baseline: candidates listed as titles (A. Title ... J. Title).
+    Mode C — candidates as soft tokens: history stays text, each candidate line
+             is a letter label + the cached adapter soft token for that movie.
+
+Both score by the log-prob the model assigns to each letter token (' A'..' J')
+at the answer position, then rank candidates by that probability. This gives a
+full ranked list, so HR@K / NDCG@K genuinely diverge across K.
+
+The LLM is loaded once; all requested modes run against it.
 
 Example:
-    # Your MovieLens-tuned LLM, text-only (no SASRec injection)
-    python scripts/eval_ranking.py --no-injection
-
-    # Same LLM + SASRec injection (embedding adapter from checkpoints/)
-    python scripts/eval_ranking.py --use-adapter-llm
-
-    python scripts/eval_ranking.py --smoke
+    python scripts/eval_ranking.py --modes A C
+    python scripts/eval_ranking.py --modes C --max-samples 200 --n-candidates 5
 """
 
 from __future__ import annotations
@@ -21,15 +25,16 @@ import sys
 import time
 from pathlib import Path
 
-import torch
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.data import IdMaps, pick_device
 from src.inject_llm import DEFAULT_LLM_PATH, InjectedLlamaRanker
-from src.metrics import evaluate_position_predictions
+from src.metrics import evaluate_ranked_lists, random_baseline
 from src.ranking_data import apply_n_candidates, load_ranking_examples
+
+LETTERS = "ABCDEFGHIJ"
+MODE_TO_INTERNAL = {"A": "text", "C": "candidates"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -44,29 +49,87 @@ def parse_args() -> argparse.Namespace:
         help="HF model id or local PEFT folder (e.g. llama31-1b-movielens-full-final)",
     )
     p.add_argument(
-        "--use-adapter-llm",
-        action="store_true",
-        help="Use adapter_llm.pt (ranking-tuned embedding adapter); else adapter.pt",
+        "--modes",
+        nargs="+",
+        choices=["A", "C"],
+        default=["A", "C"],
+        help="Which conditions to run. A=text baseline, C=candidate soft tokens.",
     )
     p.add_argument(
         "--embedding-adapter",
         type=Path,
         default=None,
-        help="Override path to embedding adapter checkpoint (.pt)",
+        help="Override path to embedding adapter checkpoint (default checkpoints/adapter.pt). Mode C only.",
     )
-    p.add_argument("--no-injection", action="store_true", help="Text-only (no SASRec vectors)")
+    p.add_argument(
+        "--chat-template",
+        action="store_true",
+        help="Wrap prompts in the chat template. Default off (raw 'Answer:' cue, "
+        "which makes the ' A'..' J' single-token scoring deterministic).",
+    )
     p.add_argument("--max-samples", type=int, default=None)
     p.add_argument("--n-history", type=int, default=10)
     p.add_argument(
         "--n-candidates",
         type=int,
         default=10,
-        help="Number of candidates per user (subsampled from test set if < 10)",
+        help="Candidates per user (subsampled from the 10 in the test set if < 10). "
+        "HR@K/NDCG@K are only reported for K < n_candidates (K==n is trivially 1.0).",
     )
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--smoke", action="store_true")
-    p.add_argument("--output", type=Path, default=ROOT / "results_ranking.json")
+    p.add_argument("--output-dir", type=Path, default=ROOT)
     return p.parse_args()
+
+
+def count_oov(model, examples):
+    """How many candidates have no soft token (fall back to zero vector) in Mode C."""
+    vocab = model.id_maps.movie_to_idx
+    total = sum(len(ex.candidate_movie_ids) for ex in examples)
+    oov = sum(1 for ex in examples for mid in ex.candidate_movie_ids if int(mid) not in vocab)
+    true_oov = sum(1 for ex in examples if int(ex.true_positive_movie_id) not in vocab)
+    return oov, total, true_oov
+
+
+def run_mode(model, examples, mode_letter, chat_template, ks, n_candidates):
+    """Run one condition; return (metrics, predictions list)."""
+    internal = MODE_TO_INTERNAL[mode_letter]
+    ranked_lists = []
+    true_indices = []
+    predictions = []
+    t0 = time.time()
+
+    for i, ex in enumerate(examples):
+        ranked, probs = model.rank_by_logprob(
+            ex, mode=internal, use_chat_template=chat_template
+        )
+        true_idx = ex.true_position - 1  # true_position is 1-based; convert to 0-based
+        ranked_lists.append(ranked)
+        true_indices.append(true_idx)
+
+        pred_idx = ranked[0]
+        predictions.append(
+            {
+                "user_id": ex.user_id,
+                "pred_letter": LETTERS[pred_idx],
+                "true_letter": LETTERS[true_idx] if 0 <= true_idx < len(LETTERS) else "?",
+                "correct": pred_idx == true_idx,
+                "ranked_letters": [LETTERS[j] for j in ranked],
+                "probs": {LETTERS[j]: round(probs[j], 4) for j in range(len(probs))},
+            }
+        )
+        if i < 3:
+            print(
+                f"  sample user {ex.user_id}: pred={LETTERS[pred_idx]} "
+                f"true={LETTERS[true_idx]} P={probs[pred_idx]:.3f}",
+                flush=True,
+            )
+        if (i + 1) % 50 == 0:
+            print(f"  [{i+1}/{len(examples)}] running...", flush=True)
+
+    metrics = evaluate_ranked_lists(ranked_lists, true_indices, ks=ks)
+    metrics["seconds"] = round(time.time() - t0, 1)
+    return metrics, predictions
 
 
 def main() -> None:
@@ -84,15 +147,12 @@ def main() -> None:
 
     print(f"[device] {device}", flush=True)
     print(f"[data] {len(examples)} test examples", flush=True)
-    print(f"[setup] history={args.n_history} candidates={args.n_candidates}", flush=True)
+    print(f"[setup] modes={args.modes} candidates={args.n_candidates} chat_template={args.chat_template}", flush=True)
     print(f"[llm] {args.model}", flush=True)
     print("[load] loading LLM (first run may download base weights)...", flush=True)
 
-    emb_path = args.embedding_adapter
-    if emb_path is None and args.use_adapter_llm:
-        emb_path = args.checkpoint_dir / "adapter_llm.pt"
-    elif emb_path is None:
-        emb_path = args.checkpoint_dir / "adapter.pt"
+    need_inject = "C" in args.modes
+    emb_path = args.embedding_adapter or (args.checkpoint_dir / "adapter.pt")
 
     model = InjectedLlamaRanker(
         model_name=args.model,
@@ -100,59 +160,69 @@ def main() -> None:
         device=device,
         freeze_llm=True,
         train_adapter=False,
-        load_embedding_adapter=not args.no_injection,
-        embedding_adapter_path=emb_path if not args.no_injection else None,
+        load_embedding_adapter=need_inject,
+        embedding_adapter_path=emb_path if need_inject else None,
     )
-    if not args.no_injection:
-        print(f"[embedding adapter] {emb_path}", flush=True)
-    print("[eval] running inference...", flush=True)
 
-    use_inj = not args.no_injection
-    preds = []
-    trues = []
-    t0 = time.time()
+    # K == n_candidates is trivially 1.0 (true item is always within the full list),
+    # so only report cutoffs strictly below the candidate count.
+    ks = [k for k in (1, 3, 5, 10) if k < args.n_candidates] or [1]
+    rand = random_baseline(len(examples), n_candidates=args.n_candidates, ks=ks, seed=args.seed)
 
-    for i, ex in enumerate(examples):
-        pred, raw = model.predict_position(
-            ex, use_injection=use_inj, max_position=args.n_candidates
+    if "C" in args.modes:
+        oov, total, true_oov = count_oov(model, examples)
+        print(
+            f"[coverage] Mode C: {oov}/{total} candidate slots have no soft token "
+            f"(zero vector) = {100*oov/max(total,1):.1f}%; true item OOV in {true_oov} examples",
+            flush=True,
         )
-        preds.append(pred)
-        trues.append(ex.true_position)
-        if i < 3:
-            print(f"  sample user {ex.user_id}: pred={pred} true={ex.true_position} raw={raw!r}", flush=True)
-        if (i + 1) % 20 == 0:
-            print(f"  [{i+1}/{len(examples)}] running...")
 
-    ks = [k for k in (1, 3, 5, 10) if k <= args.n_candidates]
-    metrics = evaluate_position_predictions(preds, trues, ks=ks)
-    elapsed = time.time() - t0
-    print(f"\n=== Results ({'injection' if use_inj else 'text-only'}) ===")
-    for k, v in metrics.items():
-        if k != "n":
-            print(f"  {k}: {v:.4f}")
-    print(f"  n: {metrics['n']}  time: {elapsed:.1f}s")
+    summary = {"random": {k: round(v, 4) for k, v in rand.items()}}
 
-    config = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
-
-    args.output.write_text(
-        json.dumps(
-            {
-                "config": config,
-                "metrics": metrics,
-                "predictions": [
-                    {
-                        "user_id": ex.user_id,
-                        "pred": p,
-                        "true": t,
-                        "correct": p == t and p > 0,
-                    }
-                    for ex, p, t in zip(examples, preds, trues)
-                ],
-            },
-            indent=2,
+    for mode_letter in args.modes:
+        label = "Mode A (text baseline)" if mode_letter == "A" else "Mode C (candidate soft tokens)"
+        print("\n" + "=" * 60, flush=True)
+        print(label, flush=True)
+        print("=" * 60, flush=True)
+        metrics, predictions = run_mode(
+            model, examples, mode_letter, args.chat_template, ks, args.n_candidates
         )
-    )
-    print(f"[done] wrote {args.output}")
+        summary[f"Mode {mode_letter}"] = {k: round(v, 4) for k, v in metrics.items()}
+
+        print(f"\n=== Results: {label} ===", flush=True)
+        for k, v in metrics.items():
+            print(f"  {k}: {v}")
+
+        out_path = args.output_dir / f"results_mode_{mode_letter}.json"
+        config = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
+        out_path.write_text(
+            json.dumps(
+                {
+                    "config": config,
+                    "mode": mode_letter,
+                    "metrics": metrics,
+                    "random_baseline": rand,
+                    "predictions": predictions,
+                },
+                indent=2,
+            )
+        )
+        print(f"[done] wrote {out_path}", flush=True)
+
+    # ── Side-by-side summary ──────────────────────────────────────────
+    print("\n" + "=" * 60, flush=True)
+    print("SUMMARY", flush=True)
+    print("=" * 60, flush=True)
+    hdr = f"{'Condition':<32}" + "".join(f"{f'HR@{k}':>8}" for k in ks) + f"{'MRR':>8}"
+    print(hdr)
+    print("-" * len(hdr))
+    for name, m in summary.items():
+        row = (
+            f"{name:<32}"
+            + "".join(f"{m.get(f'HR@{k}', 0):>8.3f}" for k in ks)
+            + f"{m.get('MRR', 0):>8.3f}"
+        )
+        print(row)
 
 
 if __name__ == "__main__":

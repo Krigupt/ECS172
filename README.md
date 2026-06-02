@@ -76,17 +76,21 @@ Eval **does not train the LLM** — it loads your checkpoint and runs ranking on
 ```bash
 pip install -r requirements.txt
 
-# Rank with your fine-tuned LLM only (prompt text, no SASRec vectors)
-python scripts/eval_ranking.py --no-injection
+# Build the letter-based (A-J) prompt artifact + verify off-by-one (torch-free)
+python scripts/build_AC_prompts.py
 
-# Rank with your LLM + SASRec embedding injection (adapter.pt or adapter_llm.pt)
-python scripts/eval_ranking.py --use-adapter-llm
+# Pre-flight: cache round-trip + single-token letters
+python scripts/sanity_check.py --model unsloth/Llama-3.2-1B-Instruct
 
-# Optional: train only the small embedding adapter (LLM stays frozen)
-python scripts/finetune_ranking.py --epochs 3 --max-train 2000
-
-python scripts/predict_ranking.py --user-id 5 --no-injection
+# Evaluate both conditions against one loaded model:
+#   Mode A = text baseline (candidate titles as text)
+#   Mode C = candidate soft tokens (cached adapter output) + letter labels
+python scripts/eval_ranking.py --modes A C --n-candidates 5 --max-samples 200
 ```
+
+Ranking is by the log-prob the model assigns to each letter token (` A`..` J`)
+at the answer position, so HR@K / NDCG@K reflect a full ranked list. Modes B
+(history soft tokens) and D (both) are out of scope.
 
 | Script | Purpose |
 |--------|---------|
@@ -116,11 +120,9 @@ python scripts/train_adapter.py --epochs 10 --llm-model unsloth/Llama-3.2-1B-Ins
 python scripts/train_adapter.py --epochs 10 --llm-model ./llama31-1b-movielens-full-final
 ```
 
-**4. Run Evaluation (Inference)**
+**4. Cache projected embeddings, then run A vs C evaluation**
 ```bash
-# Compare against Text-Only Baseline
-python scripts/eval_ranking.py --no-injection --model ./llama31-1b-movielens-full-final
-
-# Run with the newly grounded adapter injection
-python scripts/eval_ranking.py --use-adapter-llm --model ./llama31-1b-movielens-full-final
+python scripts/cache_projected_embeddings.py
+python scripts/build_AC_prompts.py
+python scripts/eval_ranking.py --modes A C --model ./llama31-1b-movielens-full-final
 ```
