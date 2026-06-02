@@ -1,4 +1,7 @@
-"""Llama with SASRec embedding injection (Phase 3). Supports base HF or local PEFT LoRA."""
+"""Llama with SASRec embedding injection (Phase 3). Supports base HF or local PEFT LoRA.
+
+Includes letter-based (A–J) log-prob ranking for Mode A (text) and Mode C (soft tokens).
+"""
 
 from __future__ import annotations
 
@@ -97,6 +100,17 @@ class InjectedLlamaRanker(nn.Module):
         ).float()
         self.register_buffer("item_embeddings", item_emb, persistent=False)
 
+        # Pre-cached adapter projections (shape: n_items x llm_dim).
+        # Created by scripts/cache_projected_embeddings.py — optional but
+        # required for injection modes C and D (candidate soft tokens).
+        proj_path = self.checkpoint_dir / "projected_embeddings.pt"
+        if proj_path.exists():
+            proj_emb = torch.load(proj_path, map_location="cpu", weights_only=True)
+            self.register_buffer("projected_embeddings", proj_emb, persistent=False)
+            print(f"[load] projected_embeddings cache loaded {tuple(proj_emb.shape)}", flush=True)
+        else:
+            self.projected_embeddings = None
+
         llm_hidden = self._resolve_hidden_size()
         self.adapter = EmbeddingAdapter(
             AdapterConfig(sasrec_dim=item_emb.shape[1], llm_dim=llm_hidden)
@@ -147,13 +161,37 @@ class InjectedLlamaRanker(nn.Module):
         return self._resolve_hidden_size()
 
     def history_vectors(self, item_indices: List[int]) -> torch.Tensor:
-        """item_indices: internal 1..n_items -> (N, hidden) projected vectors."""
+        """item_indices: internal 1..n_items -> (N, hidden) projected vectors.
+        Uses projected_embeddings cache when available; falls back to live adapter."""
         if not item_indices:
             return torch.zeros(0, self.hidden_size, device=self.device, dtype=self.dtype)
         idx = torch.tensor(item_indices, dtype=torch.long) - 1
+        if self.projected_embeddings is not None:
+            return self.projected_embeddings[idx].to(self.device, dtype=self.dtype)
         e = self.item_embeddings[idx].to(self.device, dtype=torch.float32)
-        z = self.adapter.project(e).to(dtype=self.dtype)
-        return z
+        return self.adapter.project(e).to(dtype=self.dtype)
+
+    def candidate_vectors(self, candidate_movie_ids: List[int]) -> List[torch.Tensor]:
+        """Map candidate MovieIDs -> list of (1, llm_dim) projected tensors.
+        Uses pre-cached projected_embeddings (must exist for C/D modes)."""
+        if self.projected_embeddings is None:
+            raise RuntimeError(
+                "projected_embeddings.pt not found. "
+                "Run: python scripts/cache_projected_embeddings.py"
+            )
+        vecs = []
+        for mid in candidate_movie_ids:
+            idx = self.id_maps.movie_to_idx.get(int(mid))
+            if idx is None:
+                # Unknown movie: use zero vector
+                vecs.append(torch.zeros(1, self.hidden_size, device=self.device, dtype=self.dtype))
+            else:
+                vecs.append(
+                    self.projected_embeddings[idx - 1]
+                    .unsqueeze(0)
+                    .to(self.device, dtype=self.dtype)
+                )
+        return vecs
 
     def _embed_tokens(self, token_ids: torch.Tensor) -> torch.Tensor:
         return self.embed_layer(token_ids).to(dtype=self.dtype)
@@ -193,45 +231,88 @@ class InjectedLlamaRanker(nn.Module):
 
         return fmt_prefix, suffix_part, asst_part
 
+    def _build_candidate_suffix_with_soft_tokens(
+        self,
+        example: RankingExample,
+        asst_part: str = "",
+    ) -> torch.Tensor:
+        """Build the candidate suffix embedding where each numbered line is
+        replaced by its projected soft token.  Layout per candidate i:
+            embed("\n{i}. ") | soft_token_i
+        Followed by the closing instruction text.
+        """
+        cand_vecs = self.candidate_vectors(example.candidate_movie_ids)
+        parts = []
+        intro_ids = self._tokenize_text(
+            "\n\nFrom the list below, rank which movie this user would most likely enjoy:"
+        )
+        parts.append(self._embed_tokens(intro_ids.to(self.device)))
+        n = len(example.candidate_movie_ids)
+        for i, vec in enumerate(cand_vecs, start=1):
+            bullet_ids = self._tokenize_text(f"\n{i}. ")
+            parts.append(self._embed_tokens(bullet_ids.to(self.device)))
+            parts.append(vec)  # (1, llm_dim) soft token
+        footer_ids = self._tokenize_text(
+            f"\n\nReply with just the number (1-{n}) of the movie they would rate highest."
+            + asst_part
+        )
+        parts.append(self._embed_tokens(footer_ids.to(self.device)))
+        return torch.cat(parts, dim=0)  # (T_suffix, llm_dim)
+
     def build_sequence(
         self,
         example: RankingExample,
         target_position: Optional[int] = None,
         use_injection: bool = True,
+        injection_mode: str = "history",
         use_chat_template: bool = True,
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """Returns (input_embeds, attention_mask, labels).
+
+        injection_mode:
+            'history'    (Mode B) — mean-pooled history soft token inserted between
+                          prefix and suffix. Candidates remain as text.
+            'candidates' (Mode C) — history stays as text. Each candidate line
+                          is replaced by its projected soft token.
+            'both'       (Mode D) — both history and candidates are soft tokens.
         """
-        Returns (input_embeds, attention_mask, labels) with labels=-100 for non-target tokens.
-        """
+        use_cand_tokens = use_injection and injection_mode in ("candidates", "both")
+        use_hist_tokens = use_injection and injection_mode in ("history", "both")
+
+        asst_part = ""
         if use_chat_template and self._supports_chat_template():
             fmt_prefix, suffix_part, asst_part = self._chat_prefix_suffix_parts(example)
             prefix_ids = self._tokenize_text(fmt_prefix)
-            suffix_ids = self._tokenize_text(suffix_part + asst_part)
         else:
+            fmt_prefix = example.prefix_text
+            suffix_part = example.suffix_text
             prefix_ids = self.tokenizer(
-                example.prefix_text,
+                fmt_prefix,
                 add_special_tokens=True,
-                return_tensors="pt",
-            ).input_ids[0]
-            suffix_ids = self.tokenizer(
-                example.suffix_text,
-                add_special_tokens=False,
                 return_tensors="pt",
             ).input_ids[0]
 
         prefix_emb = self._embed_tokens(prefix_ids.to(self.device))
-        suffix_emb = self._embed_tokens(suffix_ids.to(self.device))
 
         parts = [prefix_emb]
-        if use_injection:
+
+        # ── History injection (Mode B / D) ────────────────────────────
+        if use_hist_tokens and example.history_item_indices:
             inject = self.history_vectors(example.history_item_indices)
             if inject.numel() > 0:
-                # Single pooled profile vector (10 raw vectors often break generate)
-                if inject.size(0) > 1:
-                    inject = inject.mean(dim=0, keepdim=True)
                 parts.append(inject)
-        parts.append(suffix_emb)
 
+        # ── Candidate suffix ──────────────────────────────────────────
+        if use_cand_tokens:
+            # Mode C / D: replace candidate text lines with soft tokens
+            cand_emb = self._build_candidate_suffix_with_soft_tokens(example, asst_part)
+            parts.append(cand_emb)
+        else:
+            # Mode A (text-only) / B (history tokens, text candidates)
+            suffix_ids = self._tokenize_text(suffix_part + asst_part)
+            parts.append(self._embed_tokens(suffix_ids.to(self.device)))
+
+        # ── Optional teacher-forced answer token (training only) ──────
         if target_position is not None:
             answer_text = f" {int(target_position)}"
             answer_ids = self.tokenizer(
@@ -241,15 +322,19 @@ class InjectedLlamaRanker(nn.Module):
             ).input_ids[0].to(self.device)
             answer_emb = self._embed_tokens(answer_ids)
             parts.append(answer_emb)
+            # Rebuild with answer appended
+            input_embeds = torch.cat(parts, dim=0)
+            seq_len = input_embeds.size(0)
+            attn = torch.ones(seq_len, dtype=torch.long, device=self.device)
+            labels = torch.full((seq_len,), -100, dtype=torch.long, device=self.device)
+            labels[-answer_ids.size(0):] = answer_ids
+            return input_embeds.unsqueeze(0), attn.unsqueeze(0), labels.unsqueeze(0)
 
+        # ── Inference path: no target token appended ──────────────────
         input_embeds = torch.cat(parts, dim=0)
         seq_len = input_embeds.size(0)
         attn = torch.ones(seq_len, dtype=torch.long, device=self.device)
-
         labels = torch.full((seq_len,), -100, dtype=torch.long, device=self.device)
-        if target_position is not None:
-            labels[-answer_ids.size(0) :] = answer_ids
-
         return input_embeds.unsqueeze(0), attn.unsqueeze(0), labels.unsqueeze(0)
 
     def forward_batch(
@@ -289,11 +374,15 @@ class InjectedLlamaRanker(nn.Module):
         self,
         example: RankingExample,
         use_injection: bool = True,
+        injection_mode: str = "history",
         max_new_tokens: int = 16,
         use_chat_template: bool = True,
         max_position: int = 10,
     ) -> Tuple[int, str]:
-        """Returns (position 1-10, raw decoded text)."""
+        """Returns (position 1-10, raw decoded text).
+
+        injection_mode: 'history' (B), 'candidates' (C), 'both' (D).
+        """
         self.llm.eval()
         if use_chat_template and self._supports_chat_template() and not use_injection:
             text = self._predict_text_chat(example, max_new_tokens)
@@ -303,6 +392,7 @@ class InjectedLlamaRanker(nn.Module):
             example,
             target_position=None,
             use_injection=use_injection,
+            injection_mode=injection_mode,
             use_chat_template=use_chat_template,
         )
         input_len = input_embeds.size(1)
@@ -335,6 +425,193 @@ class InjectedLlamaRanker(nn.Module):
         )
         new_tokens = out[0, input_len:]
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True)
+
+    # ══════════════════════════════════════════════════════════════════
+    #  Letter-based log-prob ranking (Mode A vs Mode C)
+    # ══════════════════════════════════════════════════════════════════
+
+    LETTERS = "ABCDEFGHIJ"
+
+    def _get_letter_token_ids(self, n: int = 10) -> torch.Tensor:
+        """Resolve the single token ID for each letter label ' A' .. ' J'.
+
+        Returns a (n,) int64 tensor.  Cached after the first call.
+        """
+        cache_attr = "_letter_ids_cache"
+        if hasattr(self, cache_attr):
+            cached = getattr(self, cache_attr)
+            if cached.size(0) >= n:
+                return cached[:n].to(self.device)
+
+        ids = []
+        for ch in self.LETTERS[:n]:
+            toks = self.tokenizer.encode(f" {ch}", add_special_tokens=False)
+            if len(toks) != 1:
+                raise RuntimeError(
+                    f"Letter ' {ch}' tokenises to {toks} (expected single token). "
+                    "Check tokenizer or switch to a different label scheme."
+                )
+            ids.append(toks[0])
+        t = torch.tensor(ids, dtype=torch.long)
+        setattr(self, cache_attr, t)
+        return t.to(self.device)
+
+    # ── Mode A: pure-text prompt with letter labels ──────────────────
+
+    def build_mode_a_prompt(
+        self, example: RankingExample, use_chat_template: bool = False,
+    ) -> str:
+        """Rebuild the prompt with A–J letter labels instead of 1–10 numbers.
+
+        Returns the final string (chat-template-wrapped if use_chat_template=True
+        and the tokenizer supports it; raw otherwise).
+        """
+        titles = _candidate_title_lines_from_suffix(example.suffix_text)
+        n = len(titles)
+        if n == 0:
+            # Fallback: use movie IDs if we can't parse titles
+            titles = [f"Movie {mid}" for mid in example.candidate_movie_ids]
+            n = len(titles)
+
+        letter_range = f"{self.LETTERS[0]}-{self.LETTERS[n - 1]}"
+        cand_lines = [
+            f"{self.LETTERS[i]}. {title}" for i, title in enumerate(titles)
+        ]
+        suffix = (
+            "\n\nFrom the list below, rank which movie this user would most likely enjoy:\n"
+            + "\n".join(cand_lines)
+            + f"\n\nReply with just the letter ({letter_range}) of the movie they would rate highest."
+            + "\nAnswer:"
+        )
+        raw_prompt = example.prefix_text + suffix
+
+        if use_chat_template and self._supports_chat_template():
+            return self._chat_format_user(raw_prompt, add_generation_prompt=True)
+        return raw_prompt
+
+    # ── Mode C: soft-token candidates with letter labels ─────────────
+
+    def build_mode_c_embeds(
+        self, example: RankingExample, use_chat_template: bool = False,
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """Build inputs_embeds for Mode C (candidates as soft tokens).
+
+        History stays as text.  Each candidate is a letter bullet + soft token.
+        Returns (input_embeds, attention_mask) both with batch dim 1.
+        """
+        n = len(example.candidate_movie_ids)
+        letter_range = f"{self.LETTERS[0]}-{self.LETTERS[n - 1]}"
+
+        # ── Prefix: history as text ───────────────────────────────────
+        if use_chat_template and self._supports_chat_template():
+            # Split the chat template around the candidate section.
+            placeholder = "<<CANDIDATES_PLACEHOLDER>>"
+            raw_user = example.prefix_text + placeholder
+            fmt_full = self._chat_format_user(raw_user, add_generation_prompt=True)
+            before_ph, after_ph = fmt_full.split(placeholder, 1)
+            prefix_ids = self._tokenize_text(before_ph)
+            suffix_text_after = after_ph
+        else:
+            prefix_ids = self.tokenizer(
+                example.prefix_text, add_special_tokens=True, return_tensors="pt"
+            ).input_ids[0]
+            suffix_text_after = ""
+
+        parts: List[torch.Tensor] = [
+            self._embed_tokens(prefix_ids.to(self.device))
+        ]
+
+        # ── Framing sentence ──────────────────────────────────────────
+        framing = (
+            "\n\nEach candidate below is represented as a collaborative filtering "
+            "embedding that encodes viewing patterns from similar users:"
+        )
+        framing_ids = self._tokenize_text(framing)
+        parts.append(self._embed_tokens(framing_ids.to(self.device)))
+
+        # ── Candidate bullets: letter + soft token ────────────────────
+        cand_vecs = self.candidate_vectors(example.candidate_movie_ids)
+        for i, vec in enumerate(cand_vecs):
+            bullet_ids = self._tokenize_text(f"\n{self.LETTERS[i]}. ")
+            parts.append(self._embed_tokens(bullet_ids.to(self.device)))
+            parts.append(vec)  # (1, llm_dim)
+
+        # ── Footer ────────────────────────────────────────────────────
+        footer = (
+            f"\n\nReply with just the letter ({letter_range}) of the movie "
+            "they would rate highest.\nAnswer:"
+            + suffix_text_after
+        )
+        footer_ids = self._tokenize_text(footer)
+        parts.append(self._embed_tokens(footer_ids.to(self.device)))
+
+        input_embeds = torch.cat(parts, dim=0)  # (T, llm_dim)
+        seq_len = input_embeds.size(0)
+        attn = torch.ones(seq_len, dtype=torch.long, device=self.device)
+        return input_embeds.unsqueeze(0), attn.unsqueeze(0)
+
+    # ── Unified log-prob scoring ──────────────────────────────────────
+
+    @torch.no_grad()
+    def rank_by_logprob(
+        self,
+        example: RankingExample,
+        mode: str = "text",
+        use_chat_template: bool = False,
+    ) -> Tuple[List[int], List[float]]:
+        """Score candidates by log-prob of letter tokens A–J.
+
+        Args:
+            mode: 'text' (Mode A) or 'candidates' (Mode C).
+            use_chat_template: wrap prompt in chat template if tokenizer supports it.
+                Default False (raw prompts) — safer for pipeline validation.
+
+        Returns:
+            ranked_indices: candidate indices sorted by descending probability (0-based).
+            probs: probability for each candidate position [P(A), P(B), ..., P(J)].
+        """
+        self.llm.eval()
+        n = len(example.candidate_movie_ids)
+        letter_ids = self._get_letter_token_ids(n)
+
+        if mode == "text":
+            prompt_text = self.build_mode_a_prompt(example, use_chat_template=use_chat_template)
+            inputs = self.tokenizer(
+                prompt_text, return_tensors="pt"
+            ).to(self.device)
+            outputs = self.llm(
+                input_ids=inputs.input_ids,
+                attention_mask=inputs.attention_mask,
+                return_dict=True,
+            )
+        elif mode == "candidates":
+            input_embeds, attn = self.build_mode_c_embeds(example, use_chat_template=use_chat_template)
+            outputs = self.llm(
+                inputs_embeds=input_embeds,
+                attention_mask=attn,
+                return_dict=True,
+            )
+        else:
+            raise ValueError(f"Unknown mode '{mode}'; expected 'text' or 'candidates'")
+
+        # Extract logits at the last token position
+        logits = outputs.logits[0, -1, :]  # (vocab_size,)
+        letter_logits = logits[letter_ids]  # (n,)
+        probs = torch.softmax(letter_logits.float(), dim=0)
+
+        ranked = torch.argsort(probs, descending=True).tolist()
+        return ranked, probs.tolist()
+
+
+def _candidate_title_lines_from_suffix(suffix_text: str) -> List[str]:
+    """Extract 'Title (genres)' from numbered lines in the candidate block."""
+    titles: List[str] = []
+    for line in suffix_text.split("\n"):
+        line = line.strip()
+        m = re.match(r"^\d+\.\s+(.+)$", line)
+        if m:
+            titles.append(m.group(1))
+    return titles
 
 
 def parse_position_from_text(text: str, max_position: int = 10) -> int:

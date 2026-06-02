@@ -235,7 +235,12 @@ def main() -> None:
         p.requires_grad = False
 
     # Resolve actual hidden size from the loaded model
-    llm_hidden = llm.config.hidden_size
+    base = getattr(llm, "base_model", None)
+    if base is not None and hasattr(base, "config"):
+        llm_hidden = base.config.hidden_size
+    else:
+        llm_hidden = llm.config.hidden_size
+        
     if llm_hidden != args.llm_dim:
         print(f"[llm] overriding llm_dim: {args.llm_dim} -> {llm_hidden}")
         args.llm_dim = llm_hidden
