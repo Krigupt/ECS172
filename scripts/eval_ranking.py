@@ -25,6 +25,8 @@ import sys
 import time
 from pathlib import Path
 
+import torch
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
@@ -60,6 +62,13 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help="Override path to embedding adapter checkpoint (default checkpoints/adapter.pt). Mode C only.",
+    )
+    p.add_argument(
+        "--projected-embeddings",
+        type=Path,
+        default=None,
+        help="Override path to projected_embeddings.pt cache. Use projected_embeddings_ranking.pt "
+             "when evaluating the ranking-trained adapter. Default: checkpoints/projected_embeddings.pt",
     )
     p.add_argument(
         "--chat-template",
@@ -154,6 +163,30 @@ def main() -> None:
     need_inject = "C" in args.modes
     emb_path = args.embedding_adapter or (args.checkpoint_dir / "adapter.pt")
 
+    # Warn if the adapter was trained against a different LLM than the one we're evaluating with.
+    # Soft tokens are only meaningful relative to the exact model they were trained against.
+    if need_inject and emb_path.exists():
+        _ckpt_cfg = torch.load(emb_path, map_location="cpu", weights_only=False).get("config", {})
+        _trained_on = _ckpt_cfg.get("llm_model")
+        _eval_model = str(args.model)
+        _method = _ckpt_cfg.get("training_method", "unknown")
+        print(f"[adapter] {emb_path.name}  method={_method}", flush=True)
+        if _trained_on:
+            print(f"[adapter] trained against: {_trained_on}", flush=True)
+            if _trained_on not in _eval_model and _eval_model not in _trained_on:
+                print(
+                    f"[WARN] adapter trained on '{_trained_on}' but eval uses '{_eval_model}'. "
+                    "Soft tokens may not transfer — results could be meaningless.",
+                    flush=True,
+                )
+        if _ckpt_cfg.get("best_val_hr1") is not None:
+            print(f"[adapter] best_val_HR@1={_ckpt_cfg['best_val_hr1']:.4f}", flush=True)
+
+    proj_emb_path = args.projected_embeddings
+    if proj_emb_path is None:
+        proj_emb_path = args.checkpoint_dir / "projected_embeddings.pt"
+    print(f"[cache] projected_embeddings: {proj_emb_path.name}", flush=True)
+
     model = InjectedLlamaRanker(
         model_name=args.model,
         checkpoint_dir=args.checkpoint_dir,
@@ -162,6 +195,7 @@ def main() -> None:
         train_adapter=False,
         load_embedding_adapter=need_inject,
         embedding_adapter_path=emb_path if need_inject else None,
+        projected_embeddings_path=proj_emb_path,
     )
 
     # K == n_candidates is trivially 1.0 (true item is always within the full list),

@@ -72,6 +72,7 @@ class InjectedLlamaRanker(nn.Module):
         train_adapter: bool = True,
         load_embedding_adapter: bool = True,
         embedding_adapter_path: str | Path | None = None,
+        projected_embeddings_path: str | Path | None = None,
     ):
         super().__init__()
         self.checkpoint_dir = Path(checkpoint_dir)
@@ -103,7 +104,11 @@ class InjectedLlamaRanker(nn.Module):
         # Pre-cached adapter projections (shape: n_items x llm_dim).
         # Created by scripts/cache_projected_embeddings.py — optional but
         # required for injection modes C and D (candidate soft tokens).
-        proj_path = self.checkpoint_dir / "projected_embeddings.pt"
+        proj_path = (
+            Path(projected_embeddings_path)
+            if projected_embeddings_path is not None
+            else self.checkpoint_dir / "projected_embeddings.pt"
+        )
         if proj_path.exists():
             proj_emb = torch.load(proj_path, map_location="cpu", weights_only=True)
             self.register_buffer("projected_embeddings", proj_emb, persistent=False)
@@ -135,6 +140,7 @@ class InjectedLlamaRanker(nn.Module):
         if not train_adapter:
             for p in self.adapter.parameters():
                 p.requires_grad = False
+        self.train_adapter = train_adapter
 
         self.embed_layer = self.llm.get_input_embeddings()
 
@@ -173,8 +179,9 @@ class InjectedLlamaRanker(nn.Module):
 
     def candidate_vectors(self, candidate_movie_ids: List[int]) -> List[torch.Tensor]:
         """Map candidate MovieIDs -> list of (1, llm_dim) projected tensors.
-        Uses pre-cached projected_embeddings (must exist for C/D modes)."""
-        if self.projected_embeddings is None:
+        Uses pre-cached projected_embeddings (must exist for C/D modes) unless
+        train_adapter is True, in which case it dynamically projects from SASRec."""
+        if self.projected_embeddings is None and not self.train_adapter:
             raise RuntimeError(
                 "projected_embeddings.pt not found. "
                 "Run: python scripts/cache_projected_embeddings.py"
@@ -186,11 +193,16 @@ class InjectedLlamaRanker(nn.Module):
                 # Unknown movie: use zero vector
                 vecs.append(torch.zeros(1, self.hidden_size, device=self.device, dtype=self.dtype))
             else:
-                vecs.append(
-                    self.projected_embeddings[idx - 1]
-                    .unsqueeze(0)
-                    .to(self.device, dtype=self.dtype)
-                )
+                if self.projected_embeddings is not None and not self.train_adapter:
+                    vecs.append(
+                        self.projected_embeddings[idx - 1]
+                        .unsqueeze(0)
+                        .to(self.device, dtype=self.dtype)
+                    )
+                else:
+                    e = self.item_embeddings[idx - 1].to(self.device, dtype=torch.float32)
+                    v = self.adapter.project(e)
+                    vecs.append(v.unsqueeze(0).to(dtype=self.dtype))
         return vecs
 
     def _embed_tokens(self, token_ids: torch.Tensor) -> torch.Tensor:
@@ -601,6 +613,67 @@ class InjectedLlamaRanker(nn.Module):
 
         ranked = torch.argsort(probs, descending=True).tolist()
         return ranked, probs.tolist()
+
+    def forward_contrastive_loss(
+        self,
+        example: RankingExample,
+        use_chat_template: bool = False,
+        recon_lambda: float = 0.0,
+        true_title: Optional[str] = None,
+    ) -> torch.Tensor:
+        """Listwise ranking CE over A-J letter logits, with optional reconstruction term.
+
+        Args:
+            recon_lambda: weight for reconstruction CE (title grounding). 0 = pure ranking.
+            true_title: movie title string for the true candidate; required when recon_lambda > 0.
+        """
+        assert self.train_adapter, "train_adapter must be True to track gradients"
+
+        # ── Listwise ranking loss ─────────────────────────────────────
+        # build_mode_c_embeds calls candidate_vectors which uses live adapter
+        # (because train_adapter=True bypasses the cache even if loaded).
+        input_embeds, attn = self.build_mode_c_embeds(example, use_chat_template=use_chat_template)
+        outputs = self.llm(
+            inputs_embeds=input_embeds,
+            attention_mask=attn,
+            return_dict=True,
+        )
+        logits = outputs.logits[0, -1, :]  # (vocab_size,)
+        n = len(example.candidate_movie_ids)
+        letter_ids = self._get_letter_token_ids(n)
+        letter_logits = logits[letter_ids]  # (n,)
+        target_idx = example.true_position - 1
+        rank_loss = torch.nn.functional.cross_entropy(
+            letter_logits.unsqueeze(0).float(),
+            torch.tensor([target_idx], dtype=torch.long, device=self.device),
+        )
+
+        if recon_lambda <= 0.0 or true_title is None:
+            return rank_loss
+
+        # ── Reconstruction grounding term ─────────────────────────────
+        # Teacher-force the true candidate's title from its soft token.
+        # Gradient flows only through adapter.project(e) -> z (soft token).
+        true_mid = int(example.true_positive_movie_id)
+        true_map_idx = self.id_maps.movie_to_idx.get(true_mid)
+        if true_map_idx is None:
+            return rank_loss  # OOV true item: skip recon, return just rank loss
+
+        e = self.item_embeddings[true_map_idx - 1].unsqueeze(0).to(self.device, dtype=torch.float32)
+        z = self.adapter.project(e).to(dtype=self.dtype)  # (1, llm_dim) — in-graph
+
+        token_ids = self.tokenizer(
+            true_title, add_special_tokens=False, return_tensors="pt"
+        ).input_ids.to(self.device)
+        with torch.no_grad():
+            token_embs = self.embed_layer(token_ids).to(dtype=self.dtype)  # (1, T, D)
+
+        inputs_embeds_recon = torch.cat([z.unsqueeze(1), token_embs], dim=1)  # (1, 1+T, D)
+        ignore = torch.full((1, 1), -100, dtype=torch.long, device=self.device)
+        labels = torch.cat([ignore, token_ids], dim=1)
+
+        recon_out = self.llm(inputs_embeds=inputs_embeds_recon, labels=labels, return_dict=True)
+        return rank_loss + recon_lambda * recon_out.loss
 
 
 def _candidate_title_lines_from_suffix(suffix_text: str) -> List[str]:
