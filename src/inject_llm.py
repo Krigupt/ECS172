@@ -20,6 +20,35 @@ from .ranking_data import RankingExample
 
 DEFAULT_LLM_PATH = "llama31-1b-movielens-full-final"
 
+LETTERS = "ABCDEFGHIJ"
+
+
+def render_mode_a_prompt(example: "RankingExample") -> str:
+    """Build the raw Mode A text prompt (letter labels A-J, ends with 'Answer:').
+
+    This is the single source of truth for the Mode A prompt format. Both the
+    eval scorer (``InjectedLlamaRanker.build_mode_a_prompt``) and the LoRA
+    ranking-finetune script (``scripts/finetune_lora_ranking.py``) call this so
+    training and evaluation see byte-identical prompts (no train/eval drift).
+    Chat-template wrapping, if any, is applied by the caller.
+    """
+    titles = _candidate_title_lines_from_suffix(example.suffix_text)
+    n = len(titles)
+    if n == 0:
+        # Fallback: use movie IDs if we can't parse titles
+        titles = [f"Movie {mid}" for mid in example.candidate_movie_ids]
+        n = len(titles)
+
+    letter_range = f"{LETTERS[0]}-{LETTERS[n - 1]}"
+    cand_lines = [f"{LETTERS[i]}. {title}" for i, title in enumerate(titles)]
+    suffix = (
+        "\n\nFrom the list below, rank which movie this user would most likely enjoy:\n"
+        + "\n".join(cand_lines)
+        + f"\n\nReply with just the letter ({letter_range}) of the movie they would rate highest."
+        + "\nAnswer:"
+    )
+    return example.prefix_text + suffix
+
 
 def _dtype_for_device(device: torch.device) -> torch.dtype:
     if device.type == "cuda":
@@ -478,24 +507,7 @@ class InjectedLlamaRanker(nn.Module):
         Returns the final string (chat-template-wrapped if use_chat_template=True
         and the tokenizer supports it; raw otherwise).
         """
-        titles = _candidate_title_lines_from_suffix(example.suffix_text)
-        n = len(titles)
-        if n == 0:
-            # Fallback: use movie IDs if we can't parse titles
-            titles = [f"Movie {mid}" for mid in example.candidate_movie_ids]
-            n = len(titles)
-
-        letter_range = f"{self.LETTERS[0]}-{self.LETTERS[n - 1]}"
-        cand_lines = [
-            f"{self.LETTERS[i]}. {title}" for i, title in enumerate(titles)
-        ]
-        suffix = (
-            "\n\nFrom the list below, rank which movie this user would most likely enjoy:\n"
-            + "\n".join(cand_lines)
-            + f"\n\nReply with just the letter ({letter_range}) of the movie they would rate highest."
-            + "\nAnswer:"
-        )
-        raw_prompt = example.prefix_text + suffix
+        raw_prompt = render_mode_a_prompt(example)
 
         if use_chat_template and self._supports_chat_template():
             return self._chat_format_user(raw_prompt, add_generation_prompt=True)
