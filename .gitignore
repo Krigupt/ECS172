@@ -3,14 +3,13 @@ __pycache__/
 *.pyc
 .env
 .hf_cache/
-checkpoints/
 results*.json
 .DS_Store
 
-# Local LLM weights (download or train separately)
+# Large checkpoints and artifacts — regenerate in Colab or download separately
 llama31-1b-movielens-full-final/
-
-# Large generated prompt dumps (regenerate locally; exceeds GitHub file limit)
 train_prompts.json
-
 md_files/
+
+# Local environment
+.claude/
