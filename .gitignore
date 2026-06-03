@@ -8,6 +8,7 @@ results*.json
 
 # Large checkpoints and artifacts — regenerate in Colab or download separately
 llama31-1b-movielens-full-final/
+llama31-1b-movielens-ranking-lora/
 train_prompts.json
 md_files/
 
