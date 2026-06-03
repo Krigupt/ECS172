@@ -72,6 +72,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--use-chat-template", action="store_true", help="Wrap prompt in chat template")
     p.add_argument("--smoke", action="store_true")
     p.add_argument("--seed", type=int, default=42)
+    p.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Output checkpoint path (default: checkpoints/adapter_ranking.pt)",
+    )
     return p.parse_args()
 
 
@@ -237,7 +243,7 @@ def main() -> None:
     if best_state is not None:
         model.adapter.load_state_dict(best_state)
 
-    out = args.checkpoint_dir / "adapter_ranking.pt"
+    out = args.output or (args.checkpoint_dir / "adapter_ranking.pt")
     torch.save(
         {
             "model_state_dict": model.adapter.state_dict(),
