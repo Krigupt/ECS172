@@ -202,19 +202,6 @@ At evaluation time, in-place operations are fine since no backward pass occurs.
 
 ---
 
-## Dual-Layer Injection
-
-The system supports injecting at **two layers simultaneously** using the same or different adapter checkpoints:
-
-```
-Layer 0 (input):   embed[pos] += input_alpha · adapter_input(e_movie)
-Layer 8 (middle):  hidden[pos] += alpha · adapter_hs(e_movie)
-```
-
-This combines text understanding (the model still reads movie titles) with collaborative signal at two depths. The input-layer adapter was pre-trained for input-space injection, while the hidden-state adapter was trained specifically for the target layer.
-
----
-
 ## File Structure
 
 ```
@@ -258,11 +245,6 @@ python scripts/eval_hidden_state.py \
     --model ./lora \
     --adapter checkpoints/adapter_hs_L8.pt \
     --target-layer 8 --alpha 1.0
-
-# Dual injection (input + layer 8)
-python scripts/eval_hidden_state.py \
-    --target-layer 8 --alpha 0.1 \
-    --inject-input --input-alpha 1.0
 
 # Train hidden-state adapter (Colab A100, ~15-30 min)
 python scripts/train_hs_adapter.py \
