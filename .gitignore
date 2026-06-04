@@ -5,7 +5,7 @@ __pycache__/
 .hf_cache/
 results*.json
 .DS_Store
-
+lora/
 # Large checkpoints and artifacts — regenerate in Colab or download separately
 llama31-1b-movielens-full-final/
 llama31-1b-movielens-ranking-lora/
