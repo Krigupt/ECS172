@@ -1,0 +1,98 @@
+[
+  {
+    "UserID": 5,
+    "candidate_movie_ids": [
+      655,
+      3265,
+      1339,
+      3255,
+      2198,
+      288,
+      3548,
+      3144,
+      1791,
+      178
+    ],
+    "candidate_titles": [
+      "Mutters Courage (1995) (Comedy)",
+      "Hard-Boiled (Lashou shentan) (1992) (Action|Crime)",
+      "Bram Stoker's Dracula (1992) (Horror|Romance)",
+      "League of Their Own, A (1992) (Comedy|Drama)",
+      "Modulations (1998) (Documentary)",
+      "Natural Born Killers (1994) (Action|Thriller)",
+      "Auntie Mame (1958) (Comedy|Drama)",
+      "Glass Bottom Boat, The (1966) (Comedy|Romance)",
+      "Twilight (1998) (Crime|Drama)",
+      "Love & Human Remains (1993) (Comedy)"
+    ],
+    "true_letter": "F",
+    "true_positive_id": 288,
+    "true_positive_Title": "Natural Born Killers (1994)",
+    "prompt_A": "A user has rated the following movies:\n- Henry: Portrait of a Serial Killer (1990) (Crime|Horror): 1/5\n- Joe Gould's Secret (2000) (Drama): 2/5\n- Wings of the Dove, The (1997) (Drama|Romance|Thriller): 3/5\n- Speed (1994) (Action|Romance|Thriller): 4/5\n- Thin Red Line, The (1998) (Action|Drama|War): 5/5\n- Much Ado About Nothing (1993) (Comedy|Romance): 3/5\n- Opposite of Sex, The (1998) (Comedy|Drama): 4/5\n- Celluloid Closet, The (1995) (Documentary): 3/5\n- Being John Malkovich (1999) (Comedy): 5/5\n- Living in Oblivion (1995) (Comedy): 4/5\n\nFrom the list below, rank which movie this user would most likely enjoy:\nA. Mutters Courage (1995) (Comedy)\nB. Hard-Boiled (Lashou shentan) (1992) (Action|Crime)\nC. Bram Stoker's Dracula (1992) (Horror|Romance)\nD. League of Their Own, A (1992) (Comedy|Drama)\nE. Modulations (1998) (Documentary)\nF. Natural Born Killers (1994) (Action|Thriller)\nG. Auntie Mame (1958) (Comedy|Drama)\nH. Glass Bottom Boat, The (1966) (Comedy|Romance)\nI. Twilight (1998) (Crime|Drama)\nJ. Love & Human Remains (1993) (Comedy)\n\nReply with just the letter (A-J) of the movie they would rate highest.\nAnswer:",
+    "prompt_C_template": "A user has rated the following movies:\n- Henry: Portrait of a Serial Killer (1990) (Crime|Horror): 1/5\n- Joe Gould's Secret (2000) (Drama): 2/5\n- Wings of the Dove, The (1997) (Drama|Romance|Thriller): 3/5\n- Speed (1994) (Action|Romance|Thriller): 4/5\n- Thin Red Line, The (1998) (Action|Drama|War): 5/5\n- Much Ado About Nothing (1993) (Comedy|Romance): 3/5\n- Opposite of Sex, The (1998) (Comedy|Drama): 4/5\n- Celluloid Closet, The (1995) (Documentary): 3/5\n- Being John Malkovich (1999) (Comedy): 5/5\n- Living in Oblivion (1995) (Comedy): 4/5\n\nEach candidate below is represented as a collaborative filtering embedding that encodes viewing patterns from similar users:\nA. [SOFT_TOKEN movie_id=655]\nB. [SOFT_TOKEN movie_id=3265]\nC. [SOFT_TOKEN movie_id=1339]\nD. [SOFT_TOKEN movie_id=3255]\nE. [SOFT_TOKEN movie_id=2198]\nF. [SOFT_TOKEN movie_id=288]\nG. [SOFT_TOKEN movie_id=3548]\nH. [SOFT_TOKEN movie_id=3144]\nI. [SOFT_TOKEN movie_id=1791]\nJ. [SOFT_TOKEN movie_id=178]\n\nReply with just the letter (A-J) of the movie they would rate highest.\nAnswer:"
+  },
+  {
+    "UserID": 17,
+    "candidate_movie_ids": [
+      3948,
+      3509,
+      2067,
+      2577,
+      813,
+      707,
+      257,
+      1891,
+      3943,
+      2924
+    ],
+    "candidate_titles": [
+      "Meet the Parents (2000) (Comedy)",
+      "Black and White (1999) (Drama)",
+      "Doctor Zhivago (1965) (Drama|Romance|War)",
+      "Metroland (1997) (Comedy|Drama)",
+      "Larger Than Life (1996) (Comedy)",
+      "Mulholland Falls (1996) (Crime|Film-Noir|Thriller)",
+      "Just Cause (1995) (Mystery|Thriller)",
+      "Ugly, The (1997) (Horror|Thriller)",
+      "Bamboozled (2000) (Comedy)",
+      "Drunken Master (Zui quan) (1979) (Action|Comedy)"
+    ],
+    "true_letter": "F",
+    "true_positive_id": 707,
+    "true_positive_Title": "Mulholland Falls (1996)",
+    "prompt_A": "A user has rated the following movies:\n- Face/Off (1997) (Action|Sci-Fi|Thriller): 2/5\n- Election (1999) (Comedy): 3/5\n- Shakespeare in Love (1998) (Comedy|Romance): 4/5\n- Star Wars: Episode V - The Empire Strikes Back (1980) (Action|Adventure|Drama|Sci-Fi|War): 5/5\n- Bug's Life, A (1998) (Animation|Children's|Comedy): 4/5\n- Usual Suspects, The (1995) (Crime|Thriller): 5/5\n- Green Mile, The (1999) (Drama|Thriller): 4/5\n- Shallow Grave (1994) (Thriller): 4/5\n- Fly, The (1958) (Horror|Sci-Fi): 2/5\n- Swamp Thing (1982) (Horror|Sci-Fi): 2/5\n\nFrom the list below, rank which movie this user would most likely enjoy:\nA. Meet the Parents (2000) (Comedy)\nB. Black and White (1999) (Drama)\nC. Doctor Zhivago (1965) (Drama|Romance|War)\nD. Metroland (1997) (Comedy|Drama)\nE. Larger Than Life (1996) (Comedy)\nF. Mulholland Falls (1996) (Crime|Film-Noir|Thriller)\nG. Just Cause (1995) (Mystery|Thriller)\nH. Ugly, The (1997) (Horror|Thriller)\nI. Bamboozled (2000) (Comedy)\nJ. Drunken Master (Zui quan) (1979) (Action|Comedy)\n\nReply with just the letter (A-J) of the movie they would rate highest.\nAnswer:",
+    "prompt_C_template": "A user has rated the following movies:\n- Face/Off (1997) (Action|Sci-Fi|Thriller): 2/5\n- Election (1999) (Comedy): 3/5\n- Shakespeare in Love (1998) (Comedy|Romance): 4/5\n- Star Wars: Episode V - The Empire Strikes Back (1980) (Action|Adventure|Drama|Sci-Fi|War): 5/5\n- Bug's Life, A (1998) (Animation|Children's|Comedy): 4/5\n- Usual Suspects, The (1995) (Crime|Thriller): 5/5\n- Green Mile, The (1999) (Drama|Thriller): 4/5\n- Shallow Grave (1994) (Thriller): 4/5\n- Fly, The (1958) (Horror|Sci-Fi): 2/5\n- Swamp Thing (1982) (Horror|Sci-Fi): 2/5\n\nEach candidate below is represented as a collaborative filtering embedding that encodes viewing patterns from similar users:\nA. [SOFT_TOKEN movie_id=3948]\nB. [SOFT_TOKEN movie_id=3509]\nC. [SOFT_TOKEN movie_id=2067]\nD. [SOFT_TOKEN movie_id=2577]\nE. [SOFT_TOKEN movie_id=813]\nF. [SOFT_TOKEN movie_id=707]\nG. [SOFT_TOKEN movie_id=257]\nH. [SOFT_TOKEN movie_id=1891]\nI. [SOFT_TOKEN movie_id=3943]\nJ. [SOFT_TOKEN movie_id=2924]\n\nReply with just the letter (A-J) of the movie they would rate highest.\nAnswer:"
+  },
+  {
+    "UserID": 35,
+    "candidate_movie_ids": [
+      810,
+      1284,
+      276,
+      2699,
+      215,
+      2795,
+      1815,
+      2717,
+      2395,
+      1162
+    ],
+    "candidate_titles": [
+      "Kazaam (1996) (Children's|Comedy|Fantasy)",
+      "Big Sleep, The (1946) (Film-Noir|Mystery)",
+      "Milk Money (1994) (Comedy|Romance)",
+      "Arachnophobia (1990) (Action|Comedy|Sci-Fi|Thriller)",
+      "Before Sunrise (1995) (Drama|Romance)",
+      "Vacation (1983) (Comedy)",
+      "Eden (1997) (Drama)",
+      "Ghostbusters II (1989) (Comedy|Horror)",
+      "Rushmore (1998) (Comedy)",
+      "Ruling Class, The (1972) (Comedy)"
+    ],
+    "true_letter": "J",
+    "true_positive_id": 1162,
+    "true_positive_Title": "Ruling Class, The (1972)",
+    "prompt_A": "A user has rated the following movies:\n- Man in the Iron Mask, The (1998) (Action|Drama|Romance): 1/5\n- Sabrina (1995) (Comedy|Romance): 2/5\n- Dead Man Walking (1995) (Drama): 3/5\n- Man and a Woman, A (Un Homme et une Femme) (1966) (Drama|Romance): 4/5\n- Last Picture Show, The (1971) (Drama): 5/5\n- Good Will Hunting (1997) (Drama): 4/5\n- Breaking Away (1979) (Drama): 4/5\n- Holiday Inn (1942) (Comedy|Musical): 3/5\n- All About My Mother (Todo Sobre Mi Madre) (1999) (Comedy|Drama): 5/5\n- Top Hat (1935) (Comedy|Musical|Romance): 4/5\n\nFrom the list below, rank which movie this user would most likely enjoy:\nA. Kazaam (1996) (Children's|Comedy|Fantasy)\nB. Big Sleep, The (1946) (Film-Noir|Mystery)\nC. Milk Money (1994) (Comedy|Romance)\nD. Arachnophobia (1990) (Action|Comedy|Sci-Fi|Thriller)\nE. Before Sunrise (1995) (Drama|Romance)\nF. Vacation (1983) (Comedy)\nG. Eden (1997) (Drama)\nH. Ghostbusters II (1989) (Comedy|Horror)\nI. Rushmore (1998) (Comedy)\nJ. Ruling Class, The (1972) (Comedy)\n\nReply with just the letter (A-J) of the movie they would rate highest.\nAnswer:",
+    "prompt_C_template": "A user has rated the following movies:\n- Man in the Iron Mask, The (1998) (Action|Drama|Romance): 1/5\n- Sabrina (1995) (Comedy|Romance): 2/5\n- Dead Man Walking (1995) (Drama): 3/5\n- Man and a Woman, A (Un Homme et une Femme) (1966) (Drama|Romance): 4/5\n- Last Picture Show, The (1971) (Drama): 5/5\n- Good Will Hunting (1997) (Drama): 4/5\n- Breaking Away (1979) (Drama): 4/5\n- Holiday Inn (1942) (Comedy|Musical): 3/5\n- All About My Mother (Todo Sobre Mi Madre) (1999) (Comedy|Drama): 5/5\n- Top Hat (1935) (Comedy|Musical|Romance): 4/5\n\nEach candidate below is represented as a collaborative filtering embedding that encodes viewing patterns from similar users:\nA. [SOFT_TOKEN movie_id=810]\nB. [SOFT_TOKEN movie_id=1284]\nC. [SOFT_TOKEN movie_id=276]\nD. [SOFT_TOKEN movie_id=2699]\nE. [SOFT_TOKEN movie_id=215]\nF. [SOFT_TOKEN movie_id=2795]\nG. [SOFT_TOKEN movie_id=1815]\nH. [SOFT_TOKEN movie_id=2717]\nI. [SOFT_TOKEN movie_id=2395]\nJ. [SOFT_TOKEN movie_id=1162]\n\nReply with just the letter (A-J) of the movie they would rate highest.\nAnswer:"
+  }
+]
