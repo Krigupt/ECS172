@@ -11,6 +11,7 @@ llama31-1b-movielens-full-final/
 llama31-1b-movielens-ranking-lora/
 train_prompts.json
 md_files/
+docs/
 
 # Local environment
 .claude/
