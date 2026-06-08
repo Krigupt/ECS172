@@ -1,0 +1,1154 @@
+[
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 0,
+    "layer_score": 1.8906249940395354
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 1,
+    "layer_score": 1.3093749821186065
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 2,
+    "layer_score": 0.7593750119209289
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 3,
+    "layer_score": 1.293750023841858
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 4,
+    "layer_score": 1.0562500178813934
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 5,
+    "layer_score": 1.571875011920929
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 6,
+    "layer_score": 3.8218749940395353
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 7,
+    "layer_score": 0.6843750059604645
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 8,
+    "layer_score": 1.3375000059604645
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 9,
+    "layer_score": 1.5156249403953552
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 10,
+    "layer_score": 0.959374976158142
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 11,
+    "layer_score": 0.6124999821186066
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 12,
+    "layer_score": 0.5687499880790711
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 13,
+    "layer_score": 1.2000000059604645
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 14,
+    "layer_score": 2.396875
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 15,
+    "layer_score": 0.574999988079071
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 0,
+    "layer_score": 3.179687464237213
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 1,
+    "layer_score": 1.400000011920929
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 2,
+    "layer_score": 0.5593749940395355
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 3,
+    "layer_score": 1.9249999701976777
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 4,
+    "layer_score": 1.5406250178813934
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 5,
+    "layer_score": 2.2718750059604647
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 6,
+    "layer_score": 4.903124988079071
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 7,
+    "layer_score": 0.721874988079071
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 8,
+    "layer_score": 1.5843749642372131
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 9,
+    "layer_score": 1.6843749225139617
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 10,
+    "layer_score": 0.43124998211860655
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 11,
+    "layer_score": 0.6468749880790711
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 12,
+    "layer_score": 0.924999988079071
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 13,
+    "layer_score": 1.415624988079071
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 14,
+    "layer_score": 2.7843749940395357
+  },
+  {
+    "config_key": "base",
+    "config_label": "Base",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 15,
+    "layer_score": 0.7249999821186066
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 0,
+    "layer_score": 3.5184081733226775
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 1,
+    "layer_score": 2.3156249701976774
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 2,
+    "layer_score": 1.6156250059604644
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 3,
+    "layer_score": 1.9687499523162841
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 4,
+    "layer_score": 2.0625
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 5,
+    "layer_score": 1.362500011920929
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 6,
+    "layer_score": 1.265625011920929
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 7,
+    "layer_score": 1.681249976158142
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 8,
+    "layer_score": 2.981249976158142
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 9,
+    "layer_score": 1.353124988079071
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 10,
+    "layer_score": 1.4312500059604645
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 11,
+    "layer_score": 0.9437500417232514
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 12,
+    "layer_score": 1.059374988079071
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 13,
+    "layer_score": 1.093750011920929
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 14,
+    "layer_score": 2.7281249940395353
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 15,
+    "layer_score": 1.6375000298023223
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 0,
+    "layer_score": 3.4883300006389617
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 1,
+    "layer_score": 2.0312499821186067
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 2,
+    "layer_score": 0.9749999940395355
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 3,
+    "layer_score": 1.3593749821186065
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 4,
+    "layer_score": 1.6437500059604644
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 5,
+    "layer_score": 1.590625023841858
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 6,
+    "layer_score": 0.8843750178813934
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 7,
+    "layer_score": 1.1718750238418578
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 8,
+    "layer_score": 1.9156249701976775
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 9,
+    "layer_score": 1.003125
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 10,
+    "layer_score": 1.243750011920929
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 11,
+    "layer_score": 1.2281249940395356
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 12,
+    "layer_score": 0.584375
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 13,
+    "layer_score": 1.1750000059604644
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 14,
+    "layer_score": 2.3187500059604647
+  },
+  {
+    "config_key": "base_sas",
+    "config_label": "Base + SAS",
+    "model_name": "unsloth/Llama-3.2-1B-Instruct",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 15,
+    "layer_score": 1.3281250178813935
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 0,
+    "layer_score": 2.3281250089406966
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 1,
+    "layer_score": 2.849999985098839
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 2,
+    "layer_score": 1.8624999910593032
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 3,
+    "layer_score": 1.656249961256981
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 4,
+    "layer_score": 1.5187499791383743
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 5,
+    "layer_score": 1.6437499850988389
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 6,
+    "layer_score": 1.3999999672174455
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 7,
+    "layer_score": 1.087499961256981
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 8,
+    "layer_score": 1.1562499701976776
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 9,
+    "layer_score": 0.9937499642372132
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 10,
+    "layer_score": 2.6499999672174455
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 11,
+    "layer_score": 0.3187499940395355
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 12,
+    "layer_score": 0.4999999821186066
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 13,
+    "layer_score": 1.2437500268220902
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 14,
+    "layer_score": 1.7749999791383744
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "ground_truth",
+    "layer_index": 15,
+    "layer_score": 3.0468750298023224
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 0,
+    "layer_score": 1.9109375029802322
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 1,
+    "layer_score": 1.851562538743019
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 2,
+    "layer_score": 1.1250000089406966
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 3,
+    "layer_score": 0.7624999850988388
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 4,
+    "layer_score": 0.8125000089406967
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 5,
+    "layer_score": 0.6187500149011612
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 6,
+    "layer_score": 0.5875000029802322
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 7,
+    "layer_score": 0.6499999940395356
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 8,
+    "layer_score": 0.6937500029802323
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 9,
+    "layer_score": 0.45624998211860657
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 10,
+    "layer_score": 1.7687500089406967
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 11,
+    "layer_score": 0.32499998807907104
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 12,
+    "layer_score": 0.556249988079071
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 13,
+    "layer_score": 1.6812500089406968
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 14,
+    "layer_score": 1.8562499791383744
+  },
+  {
+    "config_key": "lora",
+    "config_label": "LoRA",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "text",
+    "target_mode": "model_choice",
+    "layer_index": 15,
+    "layer_score": 2.9265625
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 0,
+    "layer_score": 2.095312476158142
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 1,
+    "layer_score": 2.325
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 2,
+    "layer_score": 1.4875
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 3,
+    "layer_score": 1.181249976158142
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 4,
+    "layer_score": 1.7562500059604644
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 5,
+    "layer_score": 1.596875011920929
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 6,
+    "layer_score": 1.20625
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 7,
+    "layer_score": 1.406250011920929
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 8,
+    "layer_score": 1.465625
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 9,
+    "layer_score": 1.1374999940395356
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 10,
+    "layer_score": 2.256249988079071
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 11,
+    "layer_score": 0.7375000059604645
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 12,
+    "layer_score": 0.5562499761581421
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 13,
+    "layer_score": 1.1718749821186065
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 14,
+    "layer_score": 1.871874988079071
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "ground_truth",
+    "layer_index": 15,
+    "layer_score": 1.6375000178813934
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 0,
+    "layer_score": 2.340624988079071
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 1,
+    "layer_score": 2.16875
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 2,
+    "layer_score": 1.4875
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 3,
+    "layer_score": 1.04375
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 4,
+    "layer_score": 1.93125
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 5,
+    "layer_score": 1.5593750059604645
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 6,
+    "layer_score": 0.9187500059604645
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 7,
+    "layer_score": 1.315625011920929
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 8,
+    "layer_score": 1.1343750059604645
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 9,
+    "layer_score": 0.8937499940395355
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 10,
+    "layer_score": 1.556249976158142
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 11,
+    "layer_score": 0.4687500178813934
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 12,
+    "layer_score": 0.5249999970197677
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 13,
+    "layer_score": 1.3875000119209289
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 14,
+    "layer_score": 1.818749988079071
+  },
+  {
+    "config_key": "lora_sas",
+    "config_label": "LoRA + SAS",
+    "model_name": "/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora",
+    "ranking_mode": "candidates",
+    "target_mode": "model_choice",
+    "layer_index": 15,
+    "layer_score": 1.5937499970197677
+  }
+]

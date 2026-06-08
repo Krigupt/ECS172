@@ -1,0 +1,129 @@
+config_key,config_label,model_name,ranking_mode,target_mode,layer_index,layer_score
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,0,1.8906249940395354
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,1,1.3093749821186065
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,2,0.7593750119209289
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,3,1.293750023841858
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,4,1.0562500178813934
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,5,1.571875011920929
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,6,3.8218749940395353
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,7,0.6843750059604645
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,8,1.3375000059604645
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,9,1.5156249403953552
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,10,0.959374976158142
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,11,0.6124999821186066
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,12,0.5687499880790711
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,13,1.2000000059604645
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,14,2.396875
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,ground_truth,15,0.574999988079071
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,0,3.179687464237213
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,1,1.400000011920929
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,2,0.5593749940395355
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,3,1.9249999701976777
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,4,1.5406250178813934
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,5,2.2718750059604647
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,6,4.903124988079071
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,7,0.721874988079071
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,8,1.5843749642372131
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,9,1.6843749225139617
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,10,0.43124998211860655
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,11,0.6468749880790711
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,12,0.924999988079071
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,13,1.415624988079071
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,14,2.7843749940395357
+base,Base,unsloth/Llama-3.2-1B-Instruct,text,model_choice,15,0.7249999821186066
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,0,3.5184081733226775
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,1,2.3156249701976774
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,2,1.6156250059604644
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,3,1.9687499523162841
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,4,2.0625
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,5,1.362500011920929
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,6,1.265625011920929
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,7,1.681249976158142
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,8,2.981249976158142
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,9,1.353124988079071
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,10,1.4312500059604645
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,11,0.9437500417232514
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,12,1.059374988079071
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,13,1.093750011920929
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,14,2.7281249940395353
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,ground_truth,15,1.6375000298023223
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,0,3.4883300006389617
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,1,2.0312499821186067
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,2,0.9749999940395355
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,3,1.3593749821186065
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,4,1.6437500059604644
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,5,1.590625023841858
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,6,0.8843750178813934
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,7,1.1718750238418578
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,8,1.9156249701976775
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,9,1.003125
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,10,1.243750011920929
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,11,1.2281249940395356
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,12,0.584375
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,13,1.1750000059604644
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,14,2.3187500059604647
+base_sas,Base + SAS,unsloth/Llama-3.2-1B-Instruct,candidates,model_choice,15,1.3281250178813935
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,0,2.3281250089406966
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,1,2.849999985098839
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,2,1.8624999910593032
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,3,1.656249961256981
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,4,1.5187499791383743
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,5,1.6437499850988389
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,6,1.3999999672174455
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,7,1.087499961256981
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,8,1.1562499701976776
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,9,0.9937499642372132
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,10,2.6499999672174455
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,11,0.3187499940395355
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,12,0.4999999821186066
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,13,1.2437500268220902
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,14,1.7749999791383744
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,ground_truth,15,3.0468750298023224
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,0,1.9109375029802322
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,1,1.851562538743019
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,2,1.1250000089406966
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,3,0.7624999850988388
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,4,0.8125000089406967
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,5,0.6187500149011612
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,6,0.5875000029802322
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,7,0.6499999940395356
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,8,0.6937500029802323
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,9,0.45624998211860657
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,10,1.7687500089406967
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,11,0.32499998807907104
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,12,0.556249988079071
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,13,1.6812500089406968
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,14,1.8562499791383744
+lora,LoRA,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,text,model_choice,15,2.9265625
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,0,2.095312476158142
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,1,2.325
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,2,1.4875
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,3,1.181249976158142
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,4,1.7562500059604644
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,5,1.596875011920929
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,6,1.20625
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,7,1.406250011920929
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,8,1.465625
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,9,1.1374999940395356
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,10,2.256249988079071
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,11,0.7375000059604645
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,12,0.5562499761581421
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,13,1.1718749821186065
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,14,1.871874988079071
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,ground_truth,15,1.6375000178813934
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,0,2.340624988079071
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,1,2.16875
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,2,1.4875
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,3,1.04375
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,4,1.93125
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,5,1.5593750059604645
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,6,0.9187500059604645
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,7,1.315625011920929
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,8,1.1343750059604645
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,9,0.8937499940395355
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,10,1.556249976158142
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,11,0.4687500178813934
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,12,0.5249999970197677
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,13,1.3875000119209289
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,14,1.818749988079071
+lora_sas,LoRA + SAS,/content/drive/MyDrive/project-ADI/llama31-1b-movielens-ranking-lora,candidates,model_choice,15,1.5937499970197677
